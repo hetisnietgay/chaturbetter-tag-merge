@@ -1,9 +1,11 @@
 // ==UserScript==
 // @name         Chaturbetter Same-Domain Tag Merge
 // @namespace    chaturbetter-sdi
-// @version      1.6.0
+// @version      1.6.1
 // @description  Query toggle next to .filter-search-toggle. AND/OR text is fetched as tags pages and merged.
 // @author       you
+// @updateURL    https://raw.githubusercontent.com/hetisnietgay/chaturbetter-tag-merge/main/chaturbetter-tag-merge-text-scheme.user.js
+// @downloadURL  https://raw.githubusercontent.com/hetisnietgay/chaturbetter-tag-merge/main/chaturbetter-tag-merge-text-scheme.user.js
 // @match        https://chaturbetter.com/*
 // @match        https://www.chaturbetter.com/*
 // @run-at       document-idle
@@ -622,7 +624,7 @@
     running = true;
     lastHref = url.href;
     const label = plan.clauses.map(clauseLabel).join(" | ");
-    setHud("Fetching " + plan.clauses.length + " tags page" + (plan.clauses.length === 1 ? "" : "s") + "\u2026");
+    setHud("Fetching " + plan.clauses.length + " tags page" + (plan.clauses.length === 1 ? "" : "s") + "…");
     try {
       const list = await waitForList(12000);
       if (!list || location.href !== url.href) return;
@@ -643,11 +645,11 @@
           added +
           " from " +
           label +
-          " \u00b7 " +
+          " · " +
           skipped +
           " duplicate" +
           (skipped === 1 ? "" : "s") +
-          " \u00b7 " +
+          " · " +
           total +
           " rooms on the extra tags " +
           (plan.clauses.length === 1 ? "page" : "pages")
