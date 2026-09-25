@@ -1,14 +1,14 @@
 # chaturbetter-tag-merge
 
-Tampermonkey script for [Chaturbetter](https://chaturbetter.com/). The site tag search is AND-only (`?tags=`). This adds a **Query** switch next to the Search tag select so you can type `AND` / `OR` instead of clicking tag buttons.
+Tampermonkey script for [Chaturbetter](https://chaturbetter.com/). The site tag search is AND-only (`?tags=`). This adds a **Query** switch right after `.filter-search-toggle` so you can type `AND` / `OR` instead of clicking tag buttons.
 
 Each OR branch is fetched as its own tags page and the room cards are merged.
 
 ## Install
 
 1. Install [Tampermonkey](https://www.tampermonkey.net/).
-2. Create a new script and paste [`chaturbetter-tag-merge.user.js`](./chaturbetter-tag-merge.user.js).
-3. Open Chaturbetter. Turn on **Query** beside Search, type a scheme, press Go.
+2. Create a new script and paste [`chaturbetter-tag-merge-text-scheme.user.js`](./chaturbetter-tag-merge-text-scheme.user.js).
+3. Open Chaturbetter. Turn on **Query** next to Search, type a scheme, press Go.
 
 ## Scheme
 
