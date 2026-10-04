@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Chaturbetter Same-Domain Tag Merge
 // @namespace    chaturbetter-sdi
-// @version      1.6.1
+// @version      1.6.2
 // @description  Query toggle next to .filter-search-toggle. AND/OR text is fetched as tags pages and merged.
 // @author       you
 // @updateURL    https://raw.githubusercontent.com/hetisnietgay/chaturbetter-tag-merge/main/chaturbetter-tag-merge-text-scheme.user.js
@@ -25,8 +25,8 @@
    * Chaturbetter no longer has an operator search. Tag pages are
    * AND-only, via the ?tags= parameter (comma = and). Excludes are ?extags=.
    *
-   * The Query switch is inserted right after .filter-search-toggle.
-   * Turn it on and the text box appears next to that button:
+   * The Query switch sits in the filter row, after the Search control.
+   * Turning it on shows the text box and shifts the other dropdowns over:
    *
    *   bigboobs AND (findom OR sph)
    *   blonde | redhead
@@ -416,6 +416,9 @@
         align-items: center;
         gap: 6px;
         margin-inline-start: 6px;
+        position: relative;
+        z-index: 3;
+        flex: 0 0 auto;
         vertical-align: middle;
       }
       #${QUERY_ID} .sdi-query-switch {
@@ -431,16 +434,34 @@
         font: 12px/1 ui-sans-serif, system-ui, sans-serif;
         cursor: pointer;
         user-select: none;
+        flex: 0 0 auto;
       }
       #${QUERY_ID} .sdi-query-switch input { margin: 0; cursor: pointer; }
       #${QUERY_ID} form {
         display: none;
         align-items: center;
         gap: 4px;
+        min-width: 0;
       }
-      html[data-sdi-query="1"] #${QUERY_ID} form { display: inline-flex; }
+      html[data-sdi-query="1"] .filter-controls {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      html[data-sdi-query="1"] #${QUERY_ID} {
+        flex: 1 0 280px;
+        max-width: 100%;
+      }
+      html[data-sdi-query="1"] #${QUERY_ID} form {
+        display: flex;
+        flex: 1 1 auto;
+        min-width: 0;
+      }
       #${QUERY_ID} input[type="text"] {
-        width: min(280px, 46vw);
+        width: auto;
+        flex: 1 1 240px;
+        min-width: 220px;
+        max-width: 100%;
         border: 1px solid rgba(224, 138, 60, 0.45);
         border-radius: 999px;
         padding: 5px 10px;
@@ -711,7 +732,8 @@
   }
 
   function mountQuery() {
-    const anchor = document.querySelector(".filter-search-toggle");
+    const toggleBtn = document.querySelector(".filter-search-toggle");
+    const anchor = (toggleBtn && toggleBtn.closest(".filter-search-combo")) || toggleBtn;
     if (!anchor || !anchor.parentElement) return;
     let host = document.getElementById(QUERY_ID);
     if (!host) {
